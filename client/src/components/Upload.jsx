@@ -1,5 +1,11 @@
 import { useCallback, useState } from "react";
-import { FileInputIcon, Upload } from "lucide-react";
+import {
+  ArrowBigDown,
+  ArrowDown,
+  FileInputIcon,
+  Recycle,
+  Upload,
+} from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { Typewriter } from "react-simple-typewriter";
 import { motion } from "framer-motion";
@@ -11,6 +17,8 @@ const UploadImage = () => {
   const [downloadURL, setDownloadURL] = useState("");
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isPopping, setIsPopping] = useState(false);
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -49,6 +57,13 @@ const UploadImage = () => {
         const blob = await response.blob();
         const downloadLink = URL.createObjectURL(blob);
         setDownloadURL(downloadLink);
+
+        // Trigger pop effect
+        setIsPopping(true);
+        setTimeout(() => setIsPopping(false), 1000);
+
+        // Show modal after conversion
+        setTimeout(() => setShowModal(true), 1100);
       } else {
         alert("Conversion failed");
       }
@@ -78,22 +93,26 @@ const UploadImage = () => {
         </motion.h1>
         <p className="text-gray-600 text-2xl mt-12">
           Upload your image, choose your desired format, and get your converted
-          file instantly! No complex settings, no hassle—just fast and
-          high-quality conversions at your fingertips.
+          file instantly! <br />
+          No complex settings, no hassle—just fast and high-quality conversions
+          at your fingertips.
         </p>
       </div>
-      {/* /* Drag & Drop Upload Box */}
+
+      {/* Drag & Drop Upload Box */}
       <div
         {...getRootProps()}
         className="border-2 w-52 h-52 mt-5 border-dashed border-black p-10 text-center cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-md flex items-center justify-center"
       >
         <input {...getInputProps()} />
         {imagePreview ? (
-          <img
-            src={imagePreview}
-            alt="Preview"
-            className="w-40 h-40 object-cover rounded-md"
-          />
+          <div className="flex items-center justify-center w-full h-full">
+            <img
+              src={imagePreview}
+              alt="Preview"
+              className="w-40 h-40 object-cover rounded-md"
+            />
+          </div>
         ) : (
           <div className="text-gray-500 text-2xl flex flex-col items-center justify-center">
             <FileInputIcon size={55} />
@@ -116,15 +135,16 @@ const UploadImage = () => {
         <option value="tiff">TIFF</option>
       </select>
 
-      {/* Upload & Convert Button */}
-      <button
+      {/* Upload & Convert Button with Pop Effect */}
+      <motion.button
         onClick={handleUpload}
-        className="btn btn-primary mt-4 w-[50%] bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
+        className="convert mt-4 w-[30%] bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
         disabled={loading}
+        animate={isPopping ? { scale: [1, 1.2, 1] } : {}}
       >
         {loading ? "Processing..." : "Convert Image"}
-        <Upload size={16} />
-      </button>
+        <Recycle size={30} />
+      </motion.button>
 
       {/* Progress Bar */}
       {loading && (
@@ -136,17 +156,54 @@ const UploadImage = () => {
         </div>
       )}
 
-      {/* Download Link */}
-      {downloadURL && (
-        <div className="text-center mt-4">
-          <p className="text-gray-600">Download your converted image:</p>
-          <a
-            href={downloadURL}
-            download={`converted.${format}`}
-            className="text-blue-600 underline"
-          >
-            Download
-          </a>
+      {/* Modal for Converted Image */}
+      {showModal && (
+        <div className="fixed h-[100%] p-10 inset-0 flex items-center justify-center bg-black z-30 opacity-95">
+          <div className="bg-white opacity-100 p-6 rounded-lg shadow-lg w-[90%] max-w-md text-center">
+            <h2 className="text-lg font-extrabold">
+              We Cooked!! Your Image is Readyy
+            </h2>
+            {downloadURL && (
+              <div className="flex items-center justify-center mt-10">
+                <img
+                  src={downloadURL}
+                  alt="Converted Preview"
+                  className="w-50 flex items-center justify-center rounded mt-3"
+                />
+              </div>
+            )}
+            <p className="text-gray-600 mt-2">
+              {file ? file.name : "Converted Image"}
+            </p>
+            <a
+              href={downloadURL}
+              download={file ? file.name : "converted-image"}
+              className="btn btn-success mt-4 w-full"
+            >
+              Download Image
+            </a>
+            <p className="text-sm mt-4">
+              The developer spent **
+              <span className="font-bold">2 sleepless night</span>** building
+              this. <br /> Motivate Him to Build more!
+            </p>
+            <a
+              href="https://buymeacoffee.com/saintdannyyy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline mt-2 w-full"
+            >
+              ☕ Buy Him Coffee
+            </a>
+            <div className="flex items-center justify-center mt-4">
+              <button
+                className="btn btn-error mt-4 w-[30%]"
+                onClick={() => setShowModal(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
