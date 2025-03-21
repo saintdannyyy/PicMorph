@@ -19,8 +19,9 @@ app.post("/convert", upload.single("image"), async (req, res) => {
       return res.status(400).json({ error: "No file uploaded" });
     }
 
-    const format = req.body.format || "png"; // Use body instead of query for format
-    const outputPath = path.join("uploads", `converted.${format}`);
+    const format = req.body.format || "png";
+    const fileName = req.body.file || "converted";
+    const outputPath = path.join("uploads", `${fileName.format}`);
 
     await sharp(req.file.path).toFormat(format).toFile(outputPath);
 
