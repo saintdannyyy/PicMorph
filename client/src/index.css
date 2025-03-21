@@ -36,6 +36,66 @@ h1 {
   line-height: 1.1;
 }
 
+select {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  margin: 10px;
+  padding: 3px 8px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  margin: 20px;
+  padding: 3px 8px;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.convert {
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: border-color 0.25s, transform 0.5s ease-in-out;
+  animation: button-scale 2s infinite ease-in-out;
+}
+
+@keyframes button-scale {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+
+button:hover {
+  border-color: #646cff;
+  background-color: #310b77;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
