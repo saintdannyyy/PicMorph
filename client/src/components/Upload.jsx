@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { Typewriter } from "react-simple-typewriter";
-import { motion } from "framer-motion";
+import { motion, transform } from "framer-motion";
 
 const UploadImage = () => {
   const [file, setFile] = useState(null);
@@ -36,6 +36,10 @@ const UploadImage = () => {
     setFormat(event.target.value);
   };
 
+  const API_URL =
+    import.meta.env.VITE_APP_ENV === "prod"
+      ? import.meta.env.VITE_APP_PROD_BACKEND_API
+      : import.meta.env.VITE_APP_DEV_BACKEND_API;
   const handleUpload = async () => {
     if (!file) return alert("Please select an image file");
 
@@ -48,7 +52,7 @@ const UploadImage = () => {
     setDownloadURL("");
 
     try {
-      const response = await fetch("https://picmorph.onrender.com/convert", {
+      const response = await fetch(API_URL, {
         method: "POST",
         body: formData,
       });
@@ -98,7 +102,6 @@ const UploadImage = () => {
           at your fingertips.
         </p>
       </div>
-
       {/* Drag & Drop Upload Box */}
       <div
         {...getRootProps()}
@@ -120,7 +123,6 @@ const UploadImage = () => {
           </div>
         )}
       </div>
-
       {/* File Format Selection */}
       <select
         className="mt-8 w-[10%] p-5 bg-blue-800 border rounded-md"
@@ -134,18 +136,25 @@ const UploadImage = () => {
         <option value="gif">GIF</option>
         <option value="tiff">TIFF</option>
       </select>
-
-      {/* Upload & Convert Button with Pop Effect */}
+      {/* /* Upload & Convert Button with Pop Effect */}
       <motion.button
         onClick={handleUpload}
         className="convert mt-4 w-[30%] bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
         disabled={loading}
         animate={isPopping ? { scale: [1, 1.2, 1] } : {}}
       >
-        {loading ? "Processing..." : "Convert Image"}
-        <Recycle size={30} />
+        {loading ? (
+          <>
+            Processing...
+            <Recycle size={30} className="animate-spin" />
+          </>
+        ) : (
+          <>
+            Convert Image
+            <Recycle size={30} />
+          </>
+        )}
       </motion.button>
-
       {/* Progress Bar */}
       {loading && (
         <div className="w-full bg-gray-300 rounded-full h-2 mt-4">
@@ -155,7 +164,6 @@ const UploadImage = () => {
           ></div>
         </div>
       )}
-
       {/* Modal for Converted Image */}
       {showModal && (
         <div className="fixed h-[100%] p-10 inset-0 flex items-center justify-center bg-black z-30 opacity-95">
@@ -193,7 +201,7 @@ const UploadImage = () => {
               rel="noopener noreferrer"
               className="btn btn-outline mt-2 w-full"
             >
-              ☕ Buy Him Coffee
+              ☕ Buy Him Some Coffee
             </a>
             <div className="flex items-center justify-center mt-4">
               <button
