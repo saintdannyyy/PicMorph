@@ -1,6 +1,8 @@
 import { useCallback, useState } from "react";
-import { Upload } from "lucide-react";
+import { FileInputIcon, Upload } from "lucide-react";
 import { useDropzone } from "react-dropzone";
+import { Typewriter } from "react-simple-typewriter";
+import { motion } from "framer-motion";
 
 const UploadImage = () => {
   const [file, setFile] = useState(null);
@@ -59,29 +61,50 @@ const UploadImage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 w-full max-w-lg mx-auto bg-gradient-to-bl from-purple-700 to-blue-700 shadow-lg rounded-lg">
-      {/* Drag & Drop Upload Box */}
+    <div className="flex flex-col items-center justify-center p-6 w-full max-w-[60%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
+      <div className="text-center mb-6">
+        {/* Typing Animation */}
+        <motion.h1
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-2xl font-bold text-gray-800"
+        >
+          <Typewriter
+            words={["Image Conversion, Simplified in Three Steps!"]}
+            typeSpeed={50}
+            cursor
+          />
+        </motion.h1>
+        <p className="text-gray-600 text-2xl mt-12">
+          Upload your image, choose your desired format, and get your converted
+          file instantly! No complex settings, no hassle—just fast and
+          high-quality conversions at your fingertips.
+        </p>
+      </div>
+      {/* /* Drag & Drop Upload Box */}
       <div
         {...getRootProps()}
-        className="border-2 border-dashed p-6 w-full text-center cursor-pointer bg-gray-100 hover:bg-gray-200 rounded-md"
+        className="border-2 w-52 h-52 mt-5 border-dashed border-black p-10 text-center cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-md flex items-center justify-center"
       >
         <input {...getInputProps()} />
         {imagePreview ? (
           <img
             src={imagePreview}
             alt="Preview"
-            className="w-32 h-32 object-cover mx-auto rounded-md"
+            className="w-40 h-40 object-cover rounded-md"
           />
         ) : (
-          <p className="text-gray-500">
-            Drag & drop an image, or click to select one
-          </p>
+          <div className="text-gray-500 text-2xl flex flex-col items-center justify-center">
+            <FileInputIcon size={55} />
+            <span>Drag & drop an image, or click to select one</span>
+          </div>
         )}
       </div>
 
       {/* File Format Selection */}
       <select
-        className="mt-4 w-full p-2 border rounded-md"
+        className="mt-8 w-[10%] p-5 bg-blue-800 border rounded-md"
         value={format}
         onChange={handleFormatChange}
       >
@@ -96,7 +119,7 @@ const UploadImage = () => {
       {/* Upload & Convert Button */}
       <button
         onClick={handleUpload}
-        className="mt-4 w-[50%] bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
+        className="btn btn-primary mt-4 w-[50%] bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
         disabled={loading}
       >
         {loading ? "Processing..." : "Convert Image"}
