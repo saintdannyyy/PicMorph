@@ -77,7 +77,7 @@ export default function PicMorph() {
       {/* Footer */}
       <footer className="w-full p-4 mt-8 bg-base-300 text-center text-sm">
         <a
-          href="https://www.buymeacoffee.com/yourpage"
+          href="https://buymeacoffee.com/saintdannyyy"
           target="_blank"
           rel="noopener noreferrer"
           className="text-primary hover:underline"
