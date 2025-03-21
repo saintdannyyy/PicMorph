@@ -21,7 +21,7 @@ export default function PicMorph() {
     formData.append("format", format);
 
     try {
-      const response = await fetch("http://localhost:3000/convert", {
+      const response = await fetch("https://picmorph.onrender.com/convert", {
         method: "POST",
         body: formData,
       });
