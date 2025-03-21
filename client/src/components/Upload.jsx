@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { storage } from "../firebase"; // Ensure Firebase is configured
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import sharp from "sharp-wasm";
+import initSharp from "@webassembly/sharp";
 
 const UploadImage = () => {
   const [image, setImage] = useState(null);
@@ -25,17 +25,17 @@ const UploadImage = () => {
     multiple: false,
   });
 
-  // Convert Image
+  // Convert Image Using @webassembly/sharp
   const convertImage = async () => {
     if (!image) return;
 
+    const sharp = await initSharp();
     const arrayBuffer = await image.arrayBuffer();
-    const sharpInstance = await sharp(arrayBuffer);
 
     let outputFormat = selectedFormat;
     if (selectedFormat === "jpg") outputFormat = "jpeg"; // Sharp uses "jpeg"
 
-    const convertedBuffer = await sharpInstance
+    const convertedBuffer = await sharp(arrayBuffer)
       .toFormat(outputFormat)
       .toBuffer();
 
