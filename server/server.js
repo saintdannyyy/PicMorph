@@ -10,7 +10,7 @@ const port = 3000;
 
 app.use(cors());
 
-// Set up multer for handling file uploads
+// Multer setup for temporary storage
 const upload = multer({ dest: "uploads/" });
 
 app.post("/convert", upload.single("image"), async (req, res) => {
@@ -20,19 +20,29 @@ app.post("/convert", upload.single("image"), async (req, res) => {
     }
 
     const format = req.body.format || "png";
-    const fileName = req.body.file || "converted";
-    const outputPath = path.join("uploads", `${fileName.format}`);
+    const allowedFormats = ["jpeg", "png", "webp", "gif", "tiff", "avif"];
+
+    if (!allowedFormats.includes(format)) {
+      return res.status(400).json({ error: "Unsupported format" });
+    }
+
+    const outputPath = path.join("uploads", `converted.${format}`);
 
     await sharp(req.file.path).toFormat(format).toFile(outputPath);
 
-    // Send the converted file for download
+    // Send converted file for download and delete files after download completes
     res.download(outputPath, (err) => {
-      if (err) console.error("Download error:", err);
-      fs.unlinkSync(req.file.path); // Clean up uploaded file
-      fs.unlinkSync(outputPath); // Clean up converted file
+      if (err) {
+        console.error("Download error:", err);
+        res.status(500).json({ error: "Download failed" });
+      }
+
+      // Cleanup: Remove uploaded & converted files
+      fs.unlink(req.file.path, () => {});
+      fs.unlink(outputPath, () => {});
     });
   } catch (error) {
-    console.error("Sharp processing error:", error);
+    console.error("Conversion error:", error);
     res.status(500).json({ error: "Image conversion failed" });
   }
 });
