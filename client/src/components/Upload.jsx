@@ -80,22 +80,22 @@ const UploadImage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 w-full sm:max-w-[80%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
+    <div className="flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
       <div className="text-center mb-6">
         {/* Typing Animation */}
-        <motion.h1
+        <motion.h2
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="md:text-2xl sm:text-md font-bold text-gray-800"
+          className="sm:text-md md:text-2xl font-bold text-gray-800"
         >
           <Typewriter
             words={["Image Conversion, Simplified in Three Steps!"]}
             typeSpeed={50}
             cursor
           />
-        </motion.h1>
-        <p className="text-gray-600 md:text-2xl sm:text:sm mt-12">
+        </motion.h2>
+        <p className="text-gray-600 sm:text-sm text-left ml-10 md:text-2xl mt-12">
           Upload your image, choose your desired format, and get your converted
           file instantly! <br />
           No complex settings, no hassle—just fast and high-quality conversions
