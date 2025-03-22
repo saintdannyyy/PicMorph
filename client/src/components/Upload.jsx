@@ -80,7 +80,7 @@ const UploadImage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 w-full max-w-[60%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
+    <div className="flex flex-col items-center justify-center p-6 w-full max-w-[50%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
       <div className="text-center mb-6">
         {/* Typing Animation */}
         <motion.h1
@@ -105,7 +105,7 @@ const UploadImage = () => {
       {/* Drag & Drop Upload Box */}
       <div
         {...getRootProps()}
-        className="border-2 w-52 h-52 mt-5 border-dashed border-black p-10 text-center cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-md flex items-center justify-center"
+        className="border-2 mt-10 w-52 h-52 mb-10 border-dashed border-black p-10 text-center cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-md flex items-center justify-center"
       >
         <input {...getInputProps()} />
         {imagePreview ? (
@@ -125,7 +125,7 @@ const UploadImage = () => {
       </div>
       {/* File Format Selection */}
       <select
-        className="mt-8 w-[10%] sm:w-[20%] sm:p-10 p-5 bg-blue-800 border rounded-md"
+        className="mt-8 md:w-[10%] sm:w-[50%] sm:p-10 p-5 bg-blue-800 border rounded-md"
         value={format}
         onChange={handleFormatChange}
       >
@@ -139,7 +139,7 @@ const UploadImage = () => {
       {/* /* Upload & Convert Button with Pop Effect */}
       <motion.button
         onClick={handleUpload}
-        className="convert mt-4 w-[30%] sm:w-[50%] bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
+        className="convert mt-4 w-[30%] sm:w-[80%] md:w-[50%] lg:w-[20%] bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
         disabled={loading}
         animate={isPopping ? { scale: [1, 1.2, 1] } : {}}
       >
