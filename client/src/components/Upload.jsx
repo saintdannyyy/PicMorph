@@ -112,7 +112,7 @@ const UploadImage = () => {
   };
 
   return (
-    <div className="upload flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-gray-300 shadow-lg rounded-lg">
+    <div className="upload flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-slate-300 shadow-lg rounded-lg">
       <div className="text-center mb-6">
         {/* /* Typing Animation */}
         <motion.h1
@@ -208,7 +208,7 @@ const UploadImage = () => {
       {/* Modal for Converted Image */}
       {showModal && (
         <div className="fixed h-[100%] p-10 inset-0 flex items-center justify-center bg-black z-30 opacity-95">
-          <div className="bg-white opacity-100 p-6 rounded-lg shadow-lg w-[90%] max-w-md text-center">
+          <div className="bg-slate-300 opacity-100 p-6 rounded-lg shadow-lg w-[90%] max-w-md text-center">
             <h2 className="text-lg font-extrabold">
               Like Magic{" "}
               <FontAwesomeIcon
@@ -252,7 +252,7 @@ const UploadImage = () => {
             </a>
             <div className="flex items-center justify-center mt-4">
               <button
-                className="btn btn-error mt-4 w-[30%]"
+                className="bg-black mt-4 w-[30%]"
                 onClick={() => setShowModal(false)}
               >
                 Close
