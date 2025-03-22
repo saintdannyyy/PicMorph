@@ -32,6 +32,28 @@ const UploadImage = () => {
     multiple: false,
   });
 
+  const allowedFormats = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/gif",
+    "image/tiff",
+    "image/avif",
+  ];
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!allowedFormats.includes(file.type)) {
+      alert("Invalid file type. Please upload a valid image.");
+      return;
+    }
+
+    setFile(file);
+  };
+
   const handleFormatChange = (event) => {
     setFormat(event.target.value);
   };
