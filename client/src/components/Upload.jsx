@@ -15,7 +15,9 @@ import {
   fa2,
   fa3,
   faBolt,
+  faMagicWandSparkles,
   faMedal,
+  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
 const UploadImage = () => {
@@ -208,7 +210,13 @@ const UploadImage = () => {
         <div className="fixed h-[100%] p-10 inset-0 flex items-center justify-center bg-black z-30 opacity-95">
           <div className="bg-white opacity-100 p-6 rounded-lg shadow-lg w-[90%] max-w-md text-center">
             <h2 className="text-lg font-extrabold">
-              We Cooked!! Your Image is Readyy
+              Like Magic{" "}
+              <FontAwesomeIcon
+                icon={faMagicWandSparkles}
+                style={{ color: "yellow" }}
+              />
+              <FontAwesomeIcon icon={faStar} style={{ color: "yellow" }} />,{" "}
+              Your Image is Ready!
             </h2>
             {downloadURL && (
               <div className="flex items-center justify-center mt-10">
