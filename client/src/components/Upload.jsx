@@ -80,7 +80,7 @@ const UploadImage = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-6 w-full max-w-[50%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
+    <div className="flex flex-col items-center justify-center p-6 w-full sm:max-w-[80%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
       <div className="text-center mb-6">
         {/* Typing Animation */}
         <motion.h1
