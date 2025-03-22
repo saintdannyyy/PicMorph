@@ -105,7 +105,7 @@ const UploadImage = () => {
     <div className="flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
       <div className="text-center mb-6">
         {/* Typing Animation */}
-        <motion.h1
+        <motion.h2
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
@@ -116,7 +116,7 @@ const UploadImage = () => {
             typeSpeed={50}
             cursor
           />
-        </motion.h1>
+        </motion.h2>
         <p className="text-gray-600 sm:text-sm text-left ml-10 md:text-2xl mt-12">
           Upload your image, choose your desired format, and get your converted
           file instantly! <br />
@@ -161,7 +161,7 @@ const UploadImage = () => {
       {/* /* Upload & Convert Button with Pop Effect */}
       <motion.button
         onClick={handleUpload}
-        className="convert mt-4 w-[30%] sm:w-[80%] md:w-[50%] lg:w-[20%] bg-black text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
+        className="convert mt-4 md:w-[40%] sm:w-[80%] lg:w-[20%] bg-black text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
         disabled={loading}
         animate={isPopping ? { scale: [1, 1.2, 1] } : {}}
       >
