@@ -87,7 +87,7 @@ const UploadImage = () => {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-2xl sm:text-md font-bold text-gray-800"
+          className="md:text-2xl sm:text-md font-bold text-gray-800"
         >
           <Typewriter
             words={["Image Conversion, Simplified in Three Steps!"]}
@@ -95,7 +95,7 @@ const UploadImage = () => {
             cursor
           />
         </motion.h1>
-        <p className="text-gray-600 text-2xl sm:text:sm mt-12">
+        <p className="text-gray-600 md:text-2xl sm:text:sm mt-12">
           Upload your image, choose your desired format, and get your converted
           file instantly! <br />
           No complex settings, no hassle—just fast and high-quality conversions
@@ -139,7 +139,7 @@ const UploadImage = () => {
       {/* /* Upload & Convert Button with Pop Effect */}
       <motion.button
         onClick={handleUpload}
-        className="convert mt-4 w-[30%] sm:w-[80%] md:w-[50%] lg:w-[20%] bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
+        className="convert mt-4 w-[30%] sm:w-[80%] md:w-[50%] lg:w-[20%] bg-black text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
         disabled={loading}
         animate={isPopping ? { scale: [1, 1.2, 1] } : {}}
       >
