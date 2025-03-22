@@ -8,7 +8,15 @@ import {
 } from "lucide-react";
 import { useDropzone } from "react-dropzone";
 import { Typewriter } from "react-simple-typewriter";
-import { motion, transform } from "framer-motion";
+import { color, motion, transform } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  fa1,
+  fa2,
+  fa3,
+  faBolt,
+  faMedal,
+} from "@fortawesome/free-solid-svg-icons";
 
 const UploadImage = () => {
   const [file, setFile] = useState(null);
@@ -102,14 +110,14 @@ const UploadImage = () => {
   };
 
   return (
-    <div className="upload flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-purple-200 shadow-lg rounded-lg">
+    <div className="upload flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-gray-300 shadow-lg rounded-lg">
       <div className="text-center mb-6">
-        {/* Typing Animation */}
+        {/* /* Typing Animation */}
         <motion.h1
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="sm:text-lg md:text-2xl font-bold text-gray-800"
+          className="sm:text-lg md:text-2xl font-bold text-blue-600"
         >
           <Typewriter
             words={["Image Conversion, Simplified in Three Steps!"]}
@@ -118,16 +126,25 @@ const UploadImage = () => {
           />
         </motion.h1>
         <p className="under-text text-gray-600 sm:text-sm text-left p-10 md:text-2xl mt-12">
-          Upload your image, choose your desired format, and get your converted
-          file instantly! <br />
-          No complex settings, no hassle—just fast and high-quality conversions
-          at your fingertips.
+          <FontAwesomeIcon icon={fa1} style={{ color: "blue" }} /> Upload your
+          image <br />
+          <FontAwesomeIcon icon={fa2} style={{ color: "blue" }} /> Choose your
+          desired format <br />
+          <FontAwesomeIcon icon={fa3} style={{ color: "blue" }} /> Get your
+          converted file instantly! <br />
+          It's fast <FontAwesomeIcon
+            icon={faBolt}
+            style={{ color: "blue" }}
+          />{" "}
+          and high-quality{" "}
+          <FontAwesomeIcon icon={faMedal} style={{ color: "blue" }} />{" "}
+          conversions at your fingertips.
         </p>
       </div>
-      {/* Drag & Drop Upload Box */}
+      {/* File Input */}
       <div
         {...getRootProps()}
-        className="border-2 mt-10 w-52 h-52 mb-10 border-dashed border-black p-10 text-center cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-md flex items-center justify-center"
+        className="border-2 mt-10 w-52 h-52 mb-10 border-dashed border-black p-10 text-center cursor-pointer bg-blue-100 hover:bg-gray-400 rounded-md flex items-center justify-center"
       >
         <input {...getInputProps()} />
         {imagePreview ? (
@@ -139,7 +156,7 @@ const UploadImage = () => {
             />
           </div>
         ) : (
-          <div className="text-gray-500 text-2xl flex flex-col items-center justify-center">
+          <div className="text-gray-500 sm:text-lg md:text-2xl flex flex-col items-center justify-center">
             <FileInputIcon size={55} />
             <span>Drag & drop an image, or click to select one</span>
           </div>
