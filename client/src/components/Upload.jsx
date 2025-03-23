@@ -112,14 +112,14 @@ const UploadImage = () => {
   };
 
   return (
-    <div className="upload flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-slate-300 shadow-lg rounded-lg">
+    <div className="upload flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-gray-300 shadow-lg rounded-lg">
       <div className="text-center mb-6">
         {/* /* Typing Animation */}
         <motion.h1
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="sm:text-lg md:text-2xl font-bold text-blue-600"
+          className="sm:text-lg md:text-2xl font-bold text-black"
         >
           <Typewriter
             words={["Image Conversion, Simplified in Three Steps!"]}
@@ -127,12 +127,12 @@ const UploadImage = () => {
             cursor
           />
         </motion.h1>
-        <p className="under-text text-gray-600 sm:text-sm text-left p-10 md:text-2xl mt-12">
-          <FontAwesomeIcon icon={fa1} style={{ color: "blue" }} /> Upload your
+        <p className="under-text text-gray-600 sm:text-sm text-left p-10 md:text-2xl mt-12 text-center">
+          <FontAwesomeIcon icon={fa1} style={{ color: "black" }} /> Upload your
           image <br />
-          <FontAwesomeIcon icon={fa2} style={{ color: "blue" }} /> Choose your
+          <FontAwesomeIcon icon={fa2} style={{ color: "black" }} /> Choose your
           desired format <br />
-          <FontAwesomeIcon icon={fa3} style={{ color: "blue" }} /> Get your
+          <FontAwesomeIcon icon={fa3} style={{ color: "black" }} /> Get your
           converted file instantly! <br />
           It's fast <FontAwesomeIcon
             icon={faBolt}
