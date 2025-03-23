@@ -4,10 +4,9 @@ PicMorph is a web application that allows users to upload images and convert the
 
 ## Features
 
-- Upload images for conversion
-- Select the desired output format (PNG, JPG, WebP, etc.)
-- Display a progress bar during the upload process
-- Show a loader while converting images
+- Upload and convert images to various formats (JPEG, PNG, WebP, GIF, TIFF, AVIF).
+- Fast and efficient image processing with Sharp.
+- Clean and modern UI built with Tailwind CSS.
 - Provide a download link for the converted image
 
 ## Tech Stack
@@ -20,98 +19,38 @@ PicMorph is a web application that allows users to upload images and convert the
 
 ### Backend
 
-- Express.js
+- Node.js, Express.js
 - Multer (for handling file uploads)
 - Sharp (for image conversion)
 - CORS (for cross-origin requests)
 
-## Installation
-
-### Prerequisites
-
-- Node.js (>=14)
-- npm or yarn
-
-### Clone the Repository
-
-```sh
-git clone https://github.com/yourusername/PicMorph.git
-cd PicMorph
-```
-
-### Install Dependencies
-
-#### Backend
-
-```sh
-cd backend
-npm install
-```
-
-#### Frontend
-
-```sh
-cd frontend
-npm install
-```
-
-## Running the Project
-
-### Start Backend Server
-
-```sh
-cd backend
-node server.js
-```
-
-Server runs on `http://localhost:3000`
-
-### Start Frontend
-
-```sh
-cd frontend
-npm run dev
-```
-
-Frontend runs on `http://localhost:5173`
-
 ## Usage
 
-1. Open the frontend in your browser.
+1. [Open PicMorph in your browser](https://picmorph-five.vercel.app/).
 2. Upload an image file.
 3. Select the desired format.
-4. Click **Upload & Convert**.
-5. Wait for the progress bar to complete.
-6. Download the converted image once it's ready.
-
-## Folder Structure
-
-```
-PicMorph/
-├── backend/
-│   ├── server.js
-│   ├── uploads/ (temporary storage)
-│   ├── package.json
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Upload.jsx
-│   │   ├── App.jsx
-│   │   ├── main.jsx
-│   ├── package.json
-│
-├── README.md
-```
+4. Click **Convert**.
+5. Download the converted image once it's ready.
 
 ## Contributing
 
-Feel free to contribute by submitting issues or pull requests.
+We welcome contributions from developers! Follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-name`).
+3. Make your changes and commit (`git commit -m "Added new feature"`).
+4. Push to your fork (`git push origin feature-name`).
+5. Open a Pull Request.
+
+Make sure your code follows best practices and is well-documented.
 
 ## License
 
-MIT License
+This project is open-source and available under the MIT License.
+
+## Contact
+
+[For questions or suggestions, feel free to open an issue or reach out!
+](danieltesla746@gmail.com)
 
 ---
-
-Happy Coding! 🚀
