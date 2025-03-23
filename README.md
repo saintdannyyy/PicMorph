@@ -1,6 +1,7 @@
-# PicMorph
+# PicMorph [🔗](https://picmorph-five.vercel.app/)
 
-PicMorph is a web application that allows users to upload images and convert them into different formats. The application is built using React (frontend) and Express.js with Sharp (backend) for efficient image processing.
+![PicMorph screenshot](image.png)
+PicMorph is a web application that enables users to upload images and convert them into various formats. It features a React-based frontend and an Express.js backend powered by Sharp for fast and efficient image processing.
 
 ## Features
 
@@ -50,7 +51,6 @@ This project is open-source and available under the MIT License.
 
 ## Contact
 
-[For questions or suggestions, feel free to open an issue or reach out!
-](danieltesla746@gmail.com)
+For questions or suggestions, feel free to [send an email](mailto:danieltesla746@gmail.com) or open an issue on the repository.
 
 ---
