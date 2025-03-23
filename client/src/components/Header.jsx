@@ -2,9 +2,9 @@ import React from "react";
 
 const Header = () => {
   return (
-    <header className="fixed w-[70%] top-1 bg-black shadow-md py-4 flex justify-center items-center rounded-md">
+    <header className="fixed w-full top-1 bg-slate-200 shadow-md py-4 flex justify-center items-center rounded-md">
       <h1
-        className="text-white font-bold text-2xl"
+        className="text-black font-bold text-5xl"
         style={{ fontFamily: "Lobster, cursive" }}
       >
         PicMorph
