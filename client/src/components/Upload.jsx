@@ -28,7 +28,6 @@ const UploadImage = () => {
   const [imagePreview, setImagePreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [isPopping, setIsPopping] = useState(false);
 
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -72,6 +71,7 @@ const UploadImage = () => {
     import.meta.env.VITE_APP_ENV === "prod"
       ? import.meta.env.VITE_APP_PROD_BACKEND_API
       : import.meta.env.VITE_APP_DEV_BACKEND_API;
+
   const handleUpload = async () => {
     if (!file) return alert("Please select an image file");
 
@@ -93,10 +93,6 @@ const UploadImage = () => {
         const blob = await response.blob();
         const downloadLink = URL.createObjectURL(blob);
         setDownloadURL(downloadLink);
-
-        // Trigger pop effect
-        setIsPopping(true);
-        setTimeout(() => setIsPopping(false), 1000);
 
         // Show modal after conversion
         setTimeout(() => setShowModal(true), 1100);
@@ -127,7 +123,7 @@ const UploadImage = () => {
             cursor
           />
         </motion.h1>
-        <p className="under-text text-gray-600 sm:text-sm text-left p-10 md:text-2xl mt-12 text-center">
+        <p className="under-text text-gray-600 sm:text-sm p-10 md:text-2xl mt-12 text-center">
           <FontAwesomeIcon icon={fa1} style={{ color: "black" }} /> Upload your
           image <br />
           <FontAwesomeIcon icon={fa2} style={{ color: "black" }} /> Choose your
@@ -182,7 +178,6 @@ const UploadImage = () => {
         onClick={handleUpload}
         className="convert mt-4 bg-black text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
         disabled={loading}
-        animate={isPopping ? { scale: [1, 1.2, 1] } : {}}
       >
         {loading ? (
           <>
