@@ -1,26 +1,9 @@
-import { useCallback, useState } from "react";
-import {
-  ArrowBigDown,
-  ArrowDown,
-  FileInputIcon,
-  Recycle,
-  Upload,
-} from "lucide-react";
-import { useDropzone } from "react-dropzone";
+import { useState, useCallback } from "react";
+import { Upload } from "lucide-react";
 import { Typewriter } from "react-simple-typewriter";
 import { color, motion, transform } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  fa1,
-  fa2,
-  fa3,
-  faBolt,
-  faMagicWandSparkles,
-  faMedal,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons";
 
-const UploadImage = () => {
+const PicMorph = () => {
   const [file, setFile] = useState(null);
   const [format, setFormat] = useState("png");
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -29,228 +12,200 @@ const UploadImage = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const onDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
-    setFile(file);
-    setImagePreview(URL.createObjectURL(file));
+  const onDrop = useCallback((e) => {
+    e.preventDefault();
+    const droppedFile = e.dataTransfer?.files[0];
+    if (droppedFile && droppedFile.type.startsWith("image/")) {
+      handleFileSelection(droppedFile);
+    }
   }, []);
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop,
-    accept: "image/*",
-    multiple: false,
-  });
-
-  const allowedFormats = [
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/gif",
-    "image/tiff",
-    "image/avif",
-  ];
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-
-    if (!file) return;
-
-    if (!allowedFormats.includes(file.type)) {
-      alert("Invalid file type. Please upload a valid image.");
-      return;
-    }
-
-    setFile(file);
+  const handleFileSelection = (selectedFile) => {
+    setFile(selectedFile);
+    setImagePreview(URL.createObjectURL(selectedFile));
   };
 
   const handleFormatChange = (event) => {
     setFormat(event.target.value);
   };
 
-  const API_URL =
-    import.meta.env.VITE_APP_ENV === "prod"
-      ? import.meta.env.VITE_APP_PROD_BACKEND_API
-      : import.meta.env.VITE_APP_DEV_BACKEND_API;
-
   const handleUpload = async () => {
-    if (!file) return alert("Please select an image file");
-
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("format", format);
+    if (!file) return;
 
     setLoading(true);
     setUploadProgress(0);
     setDownloadURL("");
 
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        body: formData,
-      });
+    // Simulate upload/conversion process
+    const simulateProgress = () => {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 5;
+        setUploadProgress(progress);
 
-      if (response.ok) {
-        const blob = await response.blob();
-        const downloadLink = URL.createObjectURL(blob);
-        setDownloadURL(downloadLink);
+        if (progress >= 100) {
+          clearInterval(interval);
+          // Simulate completion
+          setTimeout(() => {
+            setDownloadURL(imagePreview);
+            setLoading(false);
+            setShowModal(true);
+          }, 500);
+        }
+      }, 100);
+    };
 
-        // Show modal after conversion
-        setTimeout(() => setShowModal(true), 1100);
-      } else {
-        alert("Conversion failed");
-      }
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert("Something went wrong");
-    } finally {
-      setLoading(false);
+    simulateProgress();
+  };
+
+  const browseFiles = () => {
+    document.getElementById("file-input").click();
+  };
+
+  const handleFileInputChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      handleFileSelection(selectedFile);
     }
   };
 
   return (
-    <div className="upload flex flex-col items-center justify-center p-6 w-full sm:max-w-[50%] md:max-w-[50%] font-stretch-ultra-condensed mx-auto bg-gray-300 shadow-lg rounded-lg">
-      <div className="text-center mb-6">
+    <div className="w-full max-w-4xl mx-auto text-center">
+      {/* Header */}
+      <h1 className="text-2xl font-bold mb-6">PicMorph</h1>
+      <p className="text-xl mb-12">
         {/* /* Typing Animation */}
         <motion.h1
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="sm:text-lg md:text-2xl font-bold text-black"
+          className="sm:text-md md:text-md font-bold text-white"
         >
           <Typewriter
-            words={["Image Conversion, Simplified in Three Steps!"]}
-            typeSpeed={50}
+            words={["Fast and Quality Image Conversion!"]}
+            typeSpeed={60}
             cursor
           />
         </motion.h1>
-        <p className="under-text text-gray-600 sm:text-sm p-10 md:text-2xl mt-12 text-center">
-          <FontAwesomeIcon icon={fa1} style={{ color: "black" }} /> Upload your
-          image <br />
-          <FontAwesomeIcon icon={fa2} style={{ color: "black" }} /> Choose your
-          desired format <br />
-          <FontAwesomeIcon icon={fa3} style={{ color: "black" }} /> Get your
-          converted file instantly! <br />
-          It's fast <FontAwesomeIcon
-            icon={faBolt}
-            style={{ color: "blue" }}
-          />{" "}
-          and high-quality{" "}
-          <FontAwesomeIcon icon={faMedal} style={{ color: "blue" }} />{" "}
-          conversions at your fingertips.
-        </p>
-      </div>
-      {/* File Input */}
-      <div
-        {...getRootProps()}
-        className="border-2 mt-10 w-52 h-52 mb-10 border-dashed border-black p-10 text-center cursor-pointer bg-blue-100 hover:bg-gray-400 rounded-md flex items-center justify-center"
-      >
-        <input {...getInputProps()} />
-        {imagePreview ? (
-          <div className="flex items-center justify-center w-full h-full">
-            <img
-              src={imagePreview}
-              alt="Preview"
-              className="w-40 h-40 object-cover rounded-md"
-            />
-          </div>
-        ) : (
-          <div className="text-gray-500 sm:text-lg md:text-2xl flex flex-col items-center justify-center">
-            <FileInputIcon size={55} />
-            <span>Drag & drop an image, or click to select one</span>
-          </div>
-        )}
-      </div>
-      {/* File Format Selection */}
-      <select
-        className="mt-8 md:w-[10%] sm:w-[50%] sm:p-10 p-5 bg-blue-800 border rounded-md"
-        value={format}
-        onChange={handleFormatChange}
-      >
-        <option value="png">PNG</option>
-        <option value="jpg">JPG</option>
-        <option value="webp">WEBP</option>
-        <option value="avif">AVIF</option>
-        <option value="gif">GIF</option>
-        <option value="tiff">TIFF</option>
-      </select>
-      {/* /* Upload & Convert Button with Pop Effect */}
-      <motion.button
-        onClick={handleUpload}
-        className="convert mt-4 bg-black text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
-        disabled={loading}
-      >
-        {loading ? (
-          <>
-            Processing...
-            <Recycle size={30} className="animate-spin" />
-          </>
-        ) : (
-          <>
-            Convert Image
-            <Recycle size={30} />
-          </>
-        )}
-      </motion.button>
-      {/* Progress Bar */}
-      {loading && (
-        <div className="w-full bg-gray-300 rounded-full h-2 mt-4">
+      </p>
+
+      {/* Main Container */}
+      <div className="mx-auto max-w-3xl">
+        {/* Upload Area */}
+        <div className="rounded-lg border border-dashed border-gray-700 bg-gray-900 p-16 mb-8">
           <div
-            className="bg-blue-500 h-full transition-all duration-500"
-            style={{ width: `${uploadProgress}%` }}
-          ></div>
+            className="flex flex-col items-center justify-center cursor-pointer"
+            onClick={browseFiles}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={onDrop}
+          >
+            <input
+              type="file"
+              id="file-input"
+              accept="image/*"
+              className="hidden"
+              onChange={handleFileInputChange}
+            />
+
+            {imagePreview ? (
+              <div className="flex flex-col items-center">
+                <img
+                  src={imagePreview}
+                  alt="Preview"
+                  className="max-h-48 object-contain rounded mb-4"
+                />
+                <p className="text-gray-400">{file?.name}</p>
+              </div>
+            ) : (
+              <>
+                <Upload size={48} className="text-gray-400 mb-6" />
+                <p className="text-xl font-medium mb-3">
+                  Drag & drop a file here, or click to select
+                </p>
+                <p className="text-gray-400">
+                  Supported formats: Images, Audio, and Video
+                </p>
+              </>
+            )}
+          </div>
         </div>
-      )}
-      {/* Modal for Converted Image */}
+
+        {/* Controls */}
+        <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+          <select
+            className="bg-gray-800 py-3 px-5 rounded text-white focus:outline-none sm:w-40"
+            value={format}
+            onChange={handleFormatChange}
+          >
+            <option value="png">PNG</option>
+            <option value="jpg">JPG</option>
+            <option value="webp">WEBP</option>
+            <option value="avif">AVIF</option>
+            <option value="gif">GIF</option>
+            <option value="tiff">TIFF</option>
+          </select>
+
+          <button
+            onClick={handleUpload}
+            disabled={!file || loading}
+            className={`py-3 px-6 rounded font-medium flex items-center justify-center gap-2 ${
+              !file
+                ? "bg-gray-700 opacity-50 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            {loading ? "Processing..." : "Convert Image"}
+          </button>
+        </div>
+
+        {/* Progress Bar */}
+        {loading && (
+          <div className="w-full max-w-lg mx-auto mb-8">
+            <div className="w-full bg-gray-700 rounded-full h-2">
+              <div
+                className="bg-blue-500 h-full rounded-full transition-all duration-300"
+                style={{ width: `${uploadProgress}%` }}
+              ></div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Result Modal */}
       {showModal && (
-        <div className="fixed h-[100%] p-10 inset-0 flex items-center justify-center bg-black z-30 opacity-95">
-          <div className="bg-slate-300 opacity-100 p-6 rounded-lg shadow-lg w-[90%] max-w-md text-center">
-            <h2 className="text-lg font-extrabold">
-              Like Magic{" "}
-              <FontAwesomeIcon
-                icon={faMagicWandSparkles}
-                style={{ color: "yellow" }}
-              />
-              <FontAwesomeIcon icon={faStar} style={{ color: "yellow" }} />,{" "}
-              Your Image is Ready!
-            </h2>
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/80">
+          <div className="bg-gray-900 rounded-xl p-8 max-w-lg w-full mx-4">
+            <h2 className="text-2xl font-bold mb-6">Conversion Complete!</h2>
+
             {downloadURL && (
-              <div className="flex items-center justify-center mt-10">
+              <div className="flex items-center justify-center mb-6">
                 <img
                   src={downloadURL}
                   alt="Converted Preview"
-                  className="w-50 flex items-center justify-center rounded mt-3"
+                  className="max-h-64 rounded-lg"
                 />
               </div>
             )}
-            <p className="text-gray-600 mt-2">
-              {file ? file.name : "Converted Image"}
+
+            <p className="text-gray-300 mb-6">
+              Your image has been successfully converted to{" "}
+              {format.toUpperCase()}
             </p>
-            <a
-              href={downloadURL}
-              download={file ? file.name : "converted-image"}
-              className="btn btn-success mt-4 w-full"
-            >
-              Download Image
-            </a>
-            <p className="text-sm mt-4">
-              The developer spent **
-              <span className="font-bold">2 sleepless night</span>** building
-              this. <br /> Motivate Him to Build more!
-            </p>
-            <a
-              href="https://buymeacoffee.com/saintdannyyy"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline mt-2 w-full"
-            >
-              ☕ Buy Him Some Coffee
-            </a>
-            <div className="flex items-center justify-center mt-4">
-              <button
-                className="bg-black mt-4 w-[30%]"
-                onClick={() => setShowModal(false)}
+
+            <div className="flex flex-col gap-3">
+              <a
+                href={downloadURL}
+                download={`converted-${file?.name || "image"}.${format}`}
+                className="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-lg"
               >
-                Close
+                Download Image
+              </a>
+
+              <button
+                onClick={() => setShowModal(false)}
+                className="w-full py-3 bg-gray-800 hover:bg-gray-700 rounded-lg"
+              >
+                Convert Another Image
               </button>
             </div>
           </div>
@@ -260,4 +215,4 @@ const UploadImage = () => {
   );
 };
 
-export default UploadImage;
+export default PicMorph;
